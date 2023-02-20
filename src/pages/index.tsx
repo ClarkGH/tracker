@@ -16,9 +16,23 @@ const Home: NextPage = () => {
       </Head>
       <main className={styles.main}>
         <Header />
+        <Content />
       </main>
     </>
   );
 };
 
 export default Home;
+
+const Content: React.FC = () => {
+  const { data: sessionData } = useSession();
+
+  const { data: sections, refetch: refetchSections } = api.section.getAll.useQuery(
+      undefined,
+      {
+          enabled: sessionData?.user !== undefined,
+      }
+  );
+
+  return <div>{JSON.stringify(sections)}</div>;
+}
