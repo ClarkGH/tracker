@@ -10,5 +10,16 @@ export const sectionRouter = createTRPCRouter({
           userId: ctx.session.user.id,
         }
     })
-  });
+  }),
+
+  create: protectedProcedure
+    .input(z.object({title: z.string()}))
+    .mutation(({ctx, input}) => {
+      return ctx.prisma.section.create({
+          data: {
+          title: input.title,
+          userId: ctx.session.user.id,
+        }
+      })
+    }),
 });
