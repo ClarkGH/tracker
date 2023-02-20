@@ -2,7 +2,9 @@
 
 Tracking/note taking application built with the t3 stack.
 
-## Tech Stakc
+Current "production" build hosted on vercel at tracker-five-xi.vercel.app.
+
+## Tech Stack
 
 Built purely with typescript using the [T3 Stack](https://create.t3.gg/).
 
@@ -10,8 +12,13 @@ Built purely with typescript using the [T3 Stack](https://create.t3.gg/).
 - [NextAuth.js](https://next-auth.js.org)
 - [Prisma](https://prisma.io)
 - [tRPC](https://trpc.io)
+
+## Libraries Used
+
 - Outside Authentication through [github](https://github.com)
 - Text blocks via [CodeMirror](https://codemirror.net/)
+
+## Legal Junk
 
 Copyright (c) 2023 Clark Hinchcliff
 
