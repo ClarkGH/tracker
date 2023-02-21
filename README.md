@@ -12,6 +12,8 @@ Built purely with typescript using the [T3 Stack](https://create.t3.gg/).
 - [NextAuth.js](https://next-auth.js.org)
 - [Prisma](https://prisma.io)
 - [tRPC](https://trpc.io)
+- [supabase](https://supabase.app)
+- [vercel](https://vercel.io)
 
 ## Libraries Used
 

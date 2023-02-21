@@ -83,7 +83,7 @@ const Content: React.FC = () => {
         ))}
       </ul>
 
-      <input
+      {sessionData ? <input
         type="text"
         placeholder="New Section"
         onKeyDown={(e) => {
@@ -95,26 +95,27 @@ const Content: React.FC = () => {
             e.currentTarget.value = "";
           }
         }}
-      />
+      /> : ''}
 
       <div>
-        {notes?.map((note) => (
+        {sessionData ? notes?.map((note) => (
           <NoteCard
             note={note}
             onDelete={() => void deleteNote.mutate({ id: note.id })}
           />
-        ))}
+        )) : ''}
       </div>
 
-      <NoteEditor
-        onSave={({ title, content }) => {
-          void createNote.mutate({
-            title,
-            content,
-            sectionId: selectedSection?.id ?? '',
-          })
-        }}
-      />
+      {sessionData ? 
+        <NoteEditor
+          onSave={({ title, content }) => {
+            void createNote.mutate({
+              title,
+              content,
+              sectionId: selectedSection?.id ?? '',
+            })
+          }}
+      /> : ''}
     </div>
   );
 }
