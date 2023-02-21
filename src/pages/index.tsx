@@ -2,9 +2,10 @@ import styles from "./index.module.css";
 import { type NextPage } from "next";
 import Head from "next/head";
 import { useSession } from "next-auth/react";
-
 import { api } from "~/utils/api";
 import { Header } from "~/components/Header/Header";
+import { useState } from "react";
+import { Section } from "@prisma/client";
 
 const Home: NextPage = () => {
   return (
@@ -27,12 +28,54 @@ export default Home;
 const Content: React.FC = () => {
   const { data: sessionData } = useSession();
 
+  const [selectedSection, setSelectedSection] = useState<Section | null>(null);
+
   const { data: sections, refetch: refetchSections } = api.section.getAll.useQuery(
       undefined,
       {
-          enabled: sessionData?.user !== undefined,
+        enabled: sessionData?.user !== undefined,
+        onSuccess: (data) => {
+          setSelectedSection(selectedSection ?? data[0] ?? null);
+        }
       }
   );
 
-  return <div>{JSON.stringify(sections)}</div>;
+  const createSection = api.section.create.useMutation({
+    onSuccess: () => {
+      void refetchSections();
+    }
+  });
+
+  return (
+    <div>
+      <ul>
+        {sections?.map((section) => (
+          <li>
+            <a
+              href='#'
+              onClick={(e) => {
+                e.preventDefault();
+                setSelectedSection(section);
+              }}
+            >
+              {section.title}
+            </a>
+          </li>
+        ))}
+      </ul>
+      <input
+        type="text"
+        placeholder="New Section"
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') {
+            createSection.mutate({
+              title: e.currentTarget.value,
+            });
+
+            e.currentTarget.value = "";
+          }
+        }}
+      />
+    </div>
+  );
 }

@@ -22,4 +22,14 @@ export const sectionRouter = createTRPCRouter({
         }
       })
     }),
+  
+  delete: protectedProcedure
+    .input(z.object({ id: z.string() }))
+    .mutation(async ({ctx, input}) => {
+      return ctx.prisma.section.delete({
+        where: {
+          id: input.id,
+        },
+      });
+    }),
 });
